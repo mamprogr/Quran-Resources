@@ -95,6 +95,7 @@ class Quran_text extends CI_Controller {
         
         $this->load->view('suras',$data);
     }
-
+    
+}
 /* End of file quran_text.php */
 /* Location: ./application/controllers/quran_text.php */
