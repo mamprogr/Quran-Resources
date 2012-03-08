@@ -1,10 +1,10 @@
-<hr />Ô
+<hr />
 <?php var_dump($SuraInfo);?>
 <hr />
 <p dir="rtl">
 <?php
 foreach ($Sura as $key => $Aya) {
-    echo $Aya['text']." ( {$Aya['aya']} ) ";
+    echo $Aya['text']." ( {$Aya['aya']} ) <br />";
 }
 ?>
 </p>
