@@ -1,4 +1,4 @@
-<hr />Ô
+<hr />
 <?php var_dump($SuraInfo);?>
 <hr />
 <p dir="rtl">
