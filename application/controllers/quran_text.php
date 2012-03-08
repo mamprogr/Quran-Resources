@@ -2,15 +2,22 @@
 
 class Quran_text extends CI_Controller {
     
-    private $SuraAya_Delimiter = '-';
-    private $SuraAya_SID = 3; //$SuraAya_SegmentID;
-    private $Sura_SID    = 3; //$SuraAya_SegmentID;
+    private $SuraAya_Delimiter  = '-';
+    private $SuraAya_SID        = 4; //$SuraAya_SegmentID;
+    private $Sura_SID           = 4; //$SuraAya_SegmentID;
+    private $ViewType_SID       = 3; //$ViewType_SegmentID;
+    private $ViewType           = 'html';
     
     function __construct(){
         parent::__construct();
         $this->load->model('Model_quran_text','data') ;
         $this->data->set_QuranType('quran_simple_min');
         $this->data->set_Basmalah(FALSE);
+        
+        if($this->uri->segment($this->ViewType_SID) !== FALSE)
+            if (in_array($this->uri->segment($this->ViewType_SID), array('html','json','serialize','xml')))
+                $this->ViewType = $this->uri->segment($this->ViewType_SID);
+        else return;
     }
     
     public function index()
@@ -39,7 +46,7 @@ class Quran_text extends CI_Controller {
         else return;
         
         $data['Aya'] = $Aya;
-        $this->load->view('aya',$data);
+        $this->load->view($this->ViewType.'/aya',$data);
     }
     
     function Ayas(){
@@ -58,7 +65,7 @@ class Quran_text extends CI_Controller {
         
         $data['Ayas'] = $Ayas;
         
-        $this->load->view('ayas',$data);
+        $this->load->view($this->ViewType.'/ayas',$data);
         
     }
     
@@ -75,7 +82,7 @@ class Quran_text extends CI_Controller {
         $data['Sura']     = $Sura;
         $data['SuraInfo'] = $this->data->get_SuraInfo($Index);
         
-        $this->load->view('sura',$data);
+        $this->load->view($this->ViewType.'/sura',$data);
     }
     
     function Suras(){
@@ -92,7 +99,7 @@ class Quran_text extends CI_Controller {
         $data['Suras']     = $Suras;
         $data['SurasInfo'] = $this->data->get_SurasInfo($From_Sura,$To_Sura);
         
-        $this->load->view('suras',$data);
+        $this->load->view($this->ViewType.'/suras',$data);
     }
     
 }
