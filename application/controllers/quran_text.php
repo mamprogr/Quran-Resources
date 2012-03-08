@@ -4,11 +4,11 @@ class Quran_text extends CI_Controller {
     
     private $SuraAya_Delimiter = '-';
     private $SuraAya_SID = 3; //$SuraAya_SegmentID;
-    private $Sura_SID = 3; //$SuraAya_SegmentID;
+    private $Sura_SID    = 3; //$SuraAya_SegmentID;
     
     function __construct(){
         parent::__construct();
-        $this->load->model('Model_quran_text','data')  ;
+        $this->load->model('Model_quran_text','data') ;
         $this->data->set_QuranType('quran_simple_min');
         $this->data->set_Basmalah(FALSE);
     }
@@ -39,7 +39,6 @@ class Quran_text extends CI_Controller {
         else return;
         
         $data['Aya'] = $Aya;
-        
         $this->load->view('aya',$data);
     }
     
