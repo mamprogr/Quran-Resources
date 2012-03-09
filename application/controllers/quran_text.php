@@ -15,7 +15,7 @@ class Quran_text extends CI_Controller {
         $this->data->set_Basmalah(FALSE);
         
         if($this->uri->segment($this->ViewType_SID) !== FALSE)
-            if (in_array($this->uri->segment($this->ViewType_SID), array('html','json','serialize','xml')))
+            if (in_array($this->uri->segment($this->ViewType_SID), array('html','json','serialize','xml','text')))
                 $this->ViewType = $this->uri->segment($this->ViewType_SID);
         else return;
     }
