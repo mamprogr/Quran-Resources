@@ -97,7 +97,8 @@
             <br />
             <a href="http://quran.mamprogr.net/quran_text/suras/html/110">http://quran.mamprogr.net/quran_text/suras/html/110</a><br />
             <a href="http://quran.mamprogr.net/quran_text/suras/serialize/112/114">http://quran.mamprogr.net/quran_text/suras/serialize/112/114</a><br />
-                </p>
+            <a href="http://quran.mamprogr.net/quran_text/suras/text/50/51">http://quran.mamprogr.net/quran_text/suras/text/50/51</a><br />
+        </p>
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
