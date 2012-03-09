@@ -1,5 +1,5 @@
 <div class="more-info">
-	<h4 class="compressed">Quran Resources</h4>
+	<h3 class="compressed">Quran Resources</h3>
 	<div class="more-content">
 		<p>
 			The aim of project is provide main resources of holy quran (ayats, translate, ..) ..
