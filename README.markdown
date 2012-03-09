@@ -4,31 +4,28 @@
 		<p>
 			The aim of project is provide main resources of holy quran (ayats, translate, ..) ..
 		</p>
-	</div>
-	<h3 class="compressed">How To Use ?</h3>
-	<div class="more-content">
+		<p>HOW TO USE ?</p>
 		<p>
-			Example :
-			*.Quran Text :
-				
-				http://quran.mamprogr.net/quran_text/TYPE_OF_RESOURCE/HOW_OF_VIEW/COND1/COND2
-				
-				TYPE_OF_RESOURCE : ayas OR suras .
-				HOW_OF_VIEW : html OR xml OR serialize OR json .
-				COND1,COND2 :
-					- for 'ayas' :
-									index of aya like: 37
-									OR sura-aya like: 2-10
-					- for 'suras' :
-									index of sura like: 113 
-				
-				Note : COND2 is optional ..
-						if COND2 found, the result will be range from COND1 to COND2.
-						else the result will be just one aya OR sura.
-				
-				Examples :
-					http://quran.mamprogr.net/quran_text/ayas/xml/7/20
-					http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15
+		*.Quran Text :
+			
+			http://quran.mamprogr.net/quran_text/TYPE_OF_RESOURCE/HOW_OF_VIEW/COND1/COND2
+			
+			TYPE_OF_RESOURCE : ayas OR suras .
+			HOW_OF_VIEW : html OR xml OR serialize OR json .
+			COND1,COND2 :
+				- for 'ayas' :
+								index of aya like: 37
+								OR sura-aya like: 2-10
+				- for 'suras' :
+								index of sura like: 113 
+			
+			Note : COND2 is optional ..
+					if COND2 found, the result will be range from COND1 to COND2.
+					else the result will be just one aya OR sura.
+			
+			Examples :
+				http://quran.mamprogr.net/quran_text/ayas/xml/7/20
+				http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15
 					
 		</p>
 		<p>
