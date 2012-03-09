@@ -28,7 +28,7 @@
 				<a href="http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15">http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15</a>
 
 				<a href="http://quran.mamprogr.net/quran_text/suras/html/110">http://quran.mamprogr.net/quran_text/suras/html/110</a>
-				<a href="http://quran.mamprogr.net/quran_text/suras/serialize/112/114">http://quran.mamprogr.net/quran_text/suras/serialize/112/114</a>
+				<a href="http://quran.mamprogr.net/quran_text/suras/serialize/110/114">http://quran.mamprogr.net/quran_text/suras/serialize/112/114</a>
 					
 		</pre>
 	</div>
