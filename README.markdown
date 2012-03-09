@@ -26,6 +26,9 @@
 			Examples :
 				http://quran.mamprogr.net/quran_text/ayas/xml/7/20
 				http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15
+				
+				http://quran.mamprogr.net/quran_text/suras/html/110
+				http://quran.mamprogr.net/quran_text/suras/serialize/112/114
 					
 		</pre>
 	</div>
