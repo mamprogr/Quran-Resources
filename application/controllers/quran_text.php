@@ -24,6 +24,24 @@ class Quran_text extends CI_Controller {
     {
         //$this->load->view('welcome_message');
     }
+    
+    function Ayas(){
+        
+        if($this->uri->segment($this->SuraAya_SID+1) !== FALSE){ // Range of ayas
+            return $this->_get_Ayas();
+        }elseif($this->uri->segment($this->SuraAya_SID) !== FALSE){ // Just one aya
+            return $this->_get_Aya();
+        }else return;
+    }
+    
+    function Suras(){
+        
+        if($this->uri->segment($this->Sura_SID+1) !== FALSE){ // Range of ayas
+            return $this->_get_Suras();
+        }elseif($this->uri->segment($this->Sura_SID) !== FALSE){ // Just one aya
+            return $this->_get_Sura();
+        }else return;
+    }
 
     private function _Segment2AyaIndex($SegmentID){
         $Index = NULL;
@@ -35,7 +53,7 @@ class Quran_text extends CI_Controller {
         return $Index;
     }
     
-    function Aya(){
+    private function _get_Aya(){
         
         if($this->uri->segment($this->SuraAya_SID) !== FALSE)
             $Index = $this->_Segment2AyaIndex($this->SuraAya_SID);
@@ -45,11 +63,13 @@ class Quran_text extends CI_Controller {
             $Aya = $this->data->get_AyaByIndex($Index);
         else return;
         
-        $data['Aya'] = $Aya;
-        $this->load->view($this->ViewType.'/aya',$data);
+        $Ayas[] = $Aya;
+        
+        $data['Ayas'] = $Ayas;
+        $this->load->view($this->ViewType.'/ayas',$data);
     }
     
-    function Ayas(){
+    private function _get_Ayas(){
         
         if($this->uri->segment($this->SuraAya_SID) !== FALSE || $this->uri->segment($this->SuraAya_SID+1) !== FALSE){
             $From_Index = $this->_Segment2AyaIndex($this->SuraAya_SID);
@@ -69,7 +89,7 @@ class Quran_text extends CI_Controller {
         
     }
     
-    function Sura(){
+    private function _get_Sura(){
         
         if($this->uri->segment($this->Sura_SID) !== FALSE)
             $Index = $this->uri->segment($this->Sura_SID);
@@ -79,13 +99,16 @@ class Quran_text extends CI_Controller {
             $Sura = $this->data->get_Sura($Index);
         else return;
         
-        $data['Sura']     = $Sura;
-        $data['SuraInfo'] = $this->data->get_SuraInfo($Index);
+        $Suras[] = $Sura;
+        $SurasInfo[] = $this->data->get_SuraInfo($Index);
         
-        $this->load->view($this->ViewType.'/sura',$data);
+        $data['Suras']     = $Suras;
+        $data['SurasInfo'] = $SurasInfo;
+        
+        $this->load->view($this->ViewType.'/suras',$data);
     }
     
-    function Suras(){
+    private function _get_Suras(){
         
         if($this->uri->segment($this->Sura_SID) !== FALSE || $this->uri->segment($this->Sura_SID+1) !== FALSE){
             $From_Sura = $this->uri->segment($this->Sura_SID);
