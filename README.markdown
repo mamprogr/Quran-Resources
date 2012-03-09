@@ -4,8 +4,8 @@
 		<p>
 			The aim of project is provide main resources of holy quran (ayats, translate, ..) ..
 		</p>
-		<p>HOW TO USE ?</p>
-		<p>
+		<pre>
+		HOW TO USE :
 		*.Quran Text :
 			
 			http://quran.mamprogr.net/quran_text/TYPE_OF_RESOURCE/HOW_OF_VIEW/COND1/COND2
@@ -27,9 +27,6 @@
 				http://quran.mamprogr.net/quran_text/ayas/xml/7/20
 				http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15
 					
-		</p>
-		<p>
-			You can see example in : quran.mamprogr.net 
-		</p>
+		</pre>
 	</div>
 </div>
