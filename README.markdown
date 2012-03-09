@@ -5,7 +5,6 @@
 			The aim of project is provide main resources of holy quran (ayats, translate, ..) ..
 		</p>
 	</div>
-	<hr />
 	<h3 class="compressed">How To Use ?</h3>
 	<div class="more-content">
 		<p>
