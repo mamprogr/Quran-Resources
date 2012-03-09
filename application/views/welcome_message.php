@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>Welcome to CodeIgniter</title>
+	<title>Welcome to Quran-Resources</title>
 
 	<style type="text/css">
 
@@ -67,18 +67,37 @@
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
+	<h1>Welcome to Quran-Resources!</h1>
 
 	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
+		<p>The aim of project is provide main resources of holy quran (ayats, translate, ..) ..</p>
 
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
+		<p>HOW TO USE :<br />=> <b>Quran Text :</b></p>
+		<code>http://quran.mamprogr.net/quran_text/TYPE_OF_RESOURCE/HOW_OF_VIEW/COND1/COND2</code>
 
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+		<pre>
+    <u><b>TYPE_OF_RESOURCE :</b></u> ayas OR suras .
+    <u><b>HOW_OF_VIEW :</b></u> html OR xml OR serialize OR json .
+    <u><b>COND1,COND2 :</b></u>
+        - for 'ayas' :
+                        index of aya like: 37
+                        OR sura-aya like: 2-10
+        - for 'suras' :
+                        index of sura like: 113 
+    
+    <u><b>Note :</b></u> COND2 is optional ..
+            if COND2 found, the result will be range from COND1 to COND2.
+            else the result will be just one aya OR sura.
+        </pre>
+        <p>Examples :</p>
+		<p>
+            <a href="http://quran.mamprogr.net/quran_text/suras/html/110/114">http://quran.mamprogr.net/quran_text/suras/html/112/114</a><br /><br />
+		    <a href="http://quran.mamprogr.net/quran_text/ayas/xml/7/20">http://quran.mamprogr.net/quran_text/ayas/xml/7/20</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15">http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15</a><br />
+            <br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/html/110">http://quran.mamprogr.net/quran_text/suras/html/110</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/serialize/112/114">http://quran.mamprogr.net/quran_text/suras/serialize/112/114</a><br />
+                </p>
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
