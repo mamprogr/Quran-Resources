@@ -8,12 +8,6 @@ class Model_trans_text extends CI_Model {
                                 'trans_ar_jalalayn',
                                 'trans_ar_muyassar'
                                     );
-    public $Is_AyaNum       = TRUE;
-    public $AyaNum_Style    = ' { $1 } '; // Like : <span class=ayaNum>$1</span>
-    public $Aya_Style       = ' $1 '; // Like : <div class=aya>$1<div>
-    public $Ayas_Glue       = '|';
-    public $Sura_Style      = ' $1 ';
-    public $Suras_Glue      = '<hr />';
     /** /Const **/
     
     function __construct(){
@@ -22,6 +16,12 @@ class Model_trans_text extends CI_Model {
     
     function set_TransType($Type){
         
+        switch ($Type) {
+            case 'ar.jalalayn'  : $Type = 'trans_ar_jalalayn'; break;
+            case 'ar.muyassar'  : $Type = 'trans_ar_muyassar'; break;
+            default             : $Type = 'trans_ar_muyassar'; break;
+        }
+        
         if(in_array($Type, $this->TransTypes)){
             $this->TransType = $Type;
             return 1;
@@ -29,116 +29,54 @@ class Model_trans_text extends CI_Model {
         return 0;
     }
     
-    /** trans_text **/
-   
-    function get_Aya(){
+    function get_AyaByIndex($Index){
         
-        $args = func_get_args();
-        
-        switch (count($args)) {
-            case 1 : $this->db->where('index',$args[0]);  break;
-            case 2 : $this->db->where(array('sura' => $args[0],'aya' => $args[1])); break;
-            default: return;
-        }
-        
+        $this->db->where('index',$Index);
         $q = $this->db->get($this->TransType);
         $row = $q->row();
         if($q->num_rows() > 0){
             
-            switch (count($args)) {
-                case 1 : $Sura = $row->sura; $Aya = $row->aya;  break;
-                case 2 : $Sura = $args[0];   $Aya = $args[1];   break;
-                default: return;
-            }
+            $Aya['index'] = $row->index;
+            $Aya['sura']  = $row->sura ;
+            $Aya['aya']   = $row->aya  ;
+            $Aya['text']  = $row->text ;
             
-            $text = $row->text;
-            
-            if ($this->Is_AyaNum)
-                $text .= str_replace('$1', $row->aya, $this->AyaNum_Style);
-            
-            $text = str_replace('$1', $text, $this->Aya_Style);
-            
-            return $text;
-            
-        }else return;
+            return $Aya;
+        }
+        return;
     }
     
-    function get_Sura($Sura){ // ($Sura) || ($Sura,$To) || ($Sura,$From,$To)
+    function get_AyaBySuraAya($Sura,$Aya){
         
-        $args = func_get_args();
-        $From = 1;
+        $Index = $this->SuraAya2Index($Sura, $Aya);
         
-        switch (count($args)) {
-            case 2 : $To   = $args[1]; break;
-            case 3 : $From = $args[1]; $To = $args[2]; break;
-            default: $To   = $this->get_SuraInfo($Sura, 'ayas');
+        return $this->get_AyaByIndex($Index);
+        
+    }
+    
+    function get_AyasByIndex($From_Index,$To_Index){
+        
+        for ($Index=$From_Index; $Index <= $To_Index; $Index++) { 
+            if ($Aya = $this->get_AyaByIndex($Index)) {
+                $Ayas[] = $Aya;
+            }else return;
         }
-        
-        for($Aya=$From; $Aya <= $To; $Aya++){
-            $Ayas[] = $this->get_Aya($Sura,$Aya);
-        }
-        
-        $Ayas = implode($this->Ayas_Glue,$Ayas);
-        
-        $Ayas = str_replace('$1', $Ayas, $this->Sura_Style);
         
         return $Ayas;
     }
     
-    function get_Suras($From,$To){
+    function get_AyasBySuraAya($From_Sura,$From_Aya,$To_Sura,$To_Aya){
         
-        for($Sura=$From; $Sura <= $To; $Sura++){
-            $Suras[] = $this->get_Sura($Sura);
-        }
+        $From_Index = $this->SuraAya2Index($From_Sura, $From_Aya);
+        $To_Index   = $this->SuraAya2Index($To_Sura, $To_Aya)    ;
         
-        $Suras = implode($this->Suras_Glue,$Suras);
-        return $Suras;
+        return $this->get_AyasByIndex($From_Index, $To_Index);
     }
     
-    function get_Ayas(){ // ($FromIndex,$ToIndex) || ($FromSura,$FromAya,$ToSura,$ToAya)
-        
-        $args = func_get_args();
-        
-        switch (count($args)) {
-            case 2 : $From   = $args[0];$To = $args[1]; break; // $From Index, $To Index
-            case 4 : $From = $this->SuraAya2Index($args[0], $args[1]); $To = $this->SuraAya2Index($args[2], $args[3]);; break;
-            default: return;
-        }
-        
-        for($Aya=$From; $Aya <= $To; $Aya++){
-            $Ayas[] = $this->get_Aya($Aya);
-        }
-        
-        $Ayas = implode($this->Ayas_Glue,$Ayas);
-        return $Ayas;
-    }
-    
-    function get_SuraInfo($Sura,$Info){
-        
-        $this->db->where('index',$Sura);
-        $q = $this->db->get('suras');
-        
-        if($q->num_rows() > 0){
-            $row = $q->row();
-            
-            switch ($Info) {
-                case 'ayas' : return $row->ayas;  break;
-                case 'start': return $row->start; break;
-                case 'name' : return $row->name;  break;
-                case 'tname': return $row->tname; break;
-                case 'ename': return $row->ename; break;
-                case 'type' : return $row->type;  break;
-                case 'order': return $row->order; break;
-                case 'rukus': return $row->rukus; break;
-                default: return $row->index; break;
-            }
-        }else return;
-    }
-        
     function SuraAya2Index($Sura,$aya){
         
         $this->db->where(array('sura' => $Sura,'aya' => $aya));
-        $q = $this->db->get($this->QuranType);
+        $q = $this->db->get($this->TransType);
         $row = $q->row();
         if($q->num_rows() > 0){
             return $row->index;
@@ -155,7 +93,58 @@ class Model_trans_text extends CI_Model {
         }else return;
     }
     
-    /** /trans_text **/
+    
+    function get_SuraInfo($Sura){
+        
+        $this->db->where('index',$Sura);
+        $q = $this->db->get('suras');
+        
+        if($q->num_rows() > 0){
+            foreach ($q->row() as $key => $value) {
+                $SuraInfo[$key] = $value;
+            }
+            return $SuraInfo;
+        }else return;
+    }
+    
+    function get_SurasInfo($From_Sura,$To_Sura){
+        
+        for ($Sura=$From_Sura; $Sura <= $To_Sura; $Sura++) { 
+            $SurasInfo[] = $this->get_SuraInfo($Sura);
+        }
+        
+        return $SurasInfo;
+        
+    }
+    
+    function get_Sura($SuraIndex){
+        
+        $SuraInfo = $this->get_SuraInfo($SuraIndex);
+        $From_Aya = 1;
+        $To_Aya   = $SuraInfo['ayas'];
+        for ($Index=$From_Aya; $Index <= $To_Aya; $Index++) { 
+            if ($Aya = $this->get_AyaBySuraAya($SuraIndex,$Index)) {
+                $Sura[] = $Aya;
+            }else return;
+        }
+        
+        return $Sura;
+    }
+    
+    function get_Suras($From_Sura,$To_Sura){
+        
+        for ($Sura=$From_Sura; $Sura <= $To_Sura; $Sura++) { 
+            $Suras[] = $this->get_Sura($Sura);
+        }
+        
+        return $Suras;
+    }
+    
+    function Is_Sura($Sura){ // Check if this sura number good or not !
+        
+        return ($Sura >= 1 && $Sura <= 114);
+    }
+    
 }
 /* End of file model_trans_text.php */
 /* Location: ./application/models/model_trans_text.php */
