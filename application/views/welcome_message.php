@@ -91,7 +91,7 @@
         </pre>
         <p>Examples :</p>
 		<p>
-            <a href="http://quran.mamprogr.net/quran_text/suras/html/110/114">http://quran.mamprogr.net/quran_text/suras/html/112/114</a><br /><br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/html/110/114">http://quran.mamprogr.net/quran_text/suras/html/110/114</a><br /><br />
 		    <a href="http://quran.mamprogr.net/quran_text/ayas/xml/7/20">http://quran.mamprogr.net/quran_text/ayas/xml/7/20</a><br />
             <a href="http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15">http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15</a><br />
             <br />
