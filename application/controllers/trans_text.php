@@ -2,20 +2,45 @@
 
 class Trans_text extends CI_Controller {
     
-    private $SuraAya_Delimiter = '-';
+    private $SuraAya_Delimiter  = '-';
+    private $SuraAya_SID        = 5; //$SuraAya_SegmentID;
+    private $Sura_SID           = 5; //$SuraAya_SegmentID;
+    private $Trans_SID          = 4; //$Trans_SegmentID;
+    private $ViewType_SID       = 3; //$ViewType_SegmentID;
+    private $ViewType           = 'html';
     
     function __construct(){
         parent::__construct();
-        $this->load->model('model_quran_text','quran');
-        $this->load->model('model_trans_text','trans');
-        $this->trans->Ayas_Glue = '<br />';
-        $this->trans->Sura_Style = '<div class=aya>$1</div>';
-        $this->trans->Suras_Glue = '<br />';
-        $this->trans->AyaNum_Style = '<span class=ayaNum> ( $1 ) </span>';
+        $this->load->model('Model_quran_text','data') ;
+        $this->load->model('Model_trans_text','trans');
+        
+        if($this->uri->segment($this->ViewType_SID) !== FALSE)
+            if (in_array($this->uri->segment($this->ViewType_SID), array('html','json','serialize','xml','text')))
+                $this->ViewType = $this->uri->segment($this->ViewType_SID);
+        else return;
     }
     
-    public function index(){
+    public function index()
+    {
+        //$this->load->view('welcome_message');
+    }
+    
+    function Ayas(){
         
+        if($this->uri->segment($this->SuraAya_SID+1) !== FALSE){ // Range of ayas
+            return $this->_get_Ayas();
+        }elseif($this->uri->segment($this->SuraAya_SID) !== FALSE){ // Just one aya
+            return $this->_get_Aya();
+        }else return;
+    }
+    
+    function Suras(){
+        
+        if($this->uri->segment($this->Sura_SID+1) !== FALSE){ // Range of ayas
+            return $this->_get_Suras();
+        }elseif($this->uri->segment($this->Sura_SID) !== FALSE){ // Just one aya
+            return $this->_get_Sura();
+        }else return;
     }
 
     private function _Segment2AyaIndex($SegmentID){
@@ -27,91 +52,95 @@ class Trans_text extends CI_Controller {
         }
         return $Index;
     }
-
-    private function _set_TransType($Type){
-        switch ($Type) {
-            case 'ar.jalalayn'  : $Type = 'trans_ar_jalalayn'; break;
-            case 'ar.muyassar'  : $Type = 'trans_ar_muyassar'; break;
-            default             : $Type = 'trans_ar_muyassar'; break;
-        }
+    
+    private function _get_Aya(){
         
-        $this->trans->set_TransType($Type);
+        if($this->uri->segment($this->Trans_SID) !== FALSE)
+            $this->trans->set_TransType($this->uri->segment($this->Trans_SID));
+        else return;
+        
+        if($this->uri->segment($this->SuraAya_SID) !== FALSE)
+            $Index = $this->_Segment2AyaIndex($this->SuraAya_SID);
+        else return;
+        
+        if($this->data->Is_AyaByIndex($Index))
+            $Aya = $this->trans->get_AyaByIndex($Index);
+        else return;
+        
+        $Ayas[] = $Aya;
+        
+        $data['Ayas'] = $Ayas;
+        $this->load->view('quran_text/'.$this->ViewType.'/ayas',$data);
     }
     
-    function Aya(){
-        $text = NULL;
+    private function _get_Ayas(){
         
-        if($this->uri->segment(3) === FALSE) return;
-        $this->_set_TransType($this->uri->segment(3));
+        if($this->uri->segment($this->Trans_SID) !== FALSE)
+            $this->trans->set_TransType($this->uri->segment($this->Trans_SID));
+        else return;
         
-        if($this->uri->segment(4) === FALSE) return;
+        if($this->uri->segment($this->SuraAya_SID) !== FALSE || $this->uri->segment($this->SuraAya_SID+1) !== FALSE){
+            $From_Index = $this->_Segment2AyaIndex($this->SuraAya_SID);
+            $To_Index   = $this->_Segment2AyaIndex($this->SuraAya_SID+1);
+        }else return;
         
-        $Index = $this->_Segment2AyaIndex(4);
+//        $From > $To ? $From ^= $To ^= $From ^= $To:1; //By MAMProgr (:^_^:);
+        $From_Index > $To_Index ? list($From_Index, $To_Index) = array($To_Index, $From_Index):1; // Swap ^_^;
         
-        if($this->quran->Is_AyaIndex($Index))
-            $text = $this->trans->get_Aya($Index);
+        if($this->data->Is_AyaByIndex($From_Index) && $this->data->Is_AyaByIndex($To_Index))
+            $Ayas = $this->trans->get_AyasByIndex($From_Index,$To_Index);
+        else return;
         
-        // else = NULL; ^_^
-        $data['data'] = $text;
-        $this->load->view('output',$data);
+        $data['Ayas'] = $Ayas;
+        
+        $this->load->view('quran_text/'.$this->ViewType.'/ayas',$data);
+        
     }
     
-    function Ayas(){
-        $text = NULL;
+    private function _get_Sura(){
         
-        if($this->uri->segment(3) === FALSE) return;
-        $this->_set_TransType($this->uri->segment(3));
+        if($this->uri->segment($this->Trans_SID) !== FALSE)
+            $this->trans->set_TransType($this->uri->segment($this->Trans_SID));
+        else return;
         
-        if($this->uri->segment(4) === FALSE || $this->uri->segment(5) === FALSE) return;
+        if($this->uri->segment($this->Sura_SID) !== FALSE)
+            $Index = $this->uri->segment($this->Sura_SID);
+        else return;
         
-        $From = $this->_Segment2AyaIndex(4);
-        $To   = $this->_Segment2AyaIndex(5);
+        if($this->data->Is_Sura($Index))
+            $Sura = $this->trans->get_Sura($Index);
+        else return;
         
-        $From > $To ? list($From, $To) = array($To, $From):1; // Swap ^_^;
+        $Suras[] = $Sura;
+        $SurasInfo[] = $this->data->get_SuraInfo($Index);
         
-        if($this->quran->Is_AyaIndex($To) && $this->quran->Is_AyaIndex($To))
-            $text = $this->trans->get_Ayas($From,$To);
-        // else = NULL; ^_^
+        $data['Suras']     = $Suras;
+        $data['SurasInfo'] = $SurasInfo;
         
-        $data['data'] = $text;
-        $this->load->view('output',$data);
+        $this->load->view('quran_text/'.$this->ViewType.'/suras',$data);
     }
     
-    function Sura(){
-        $Sura = $text = NULL;
+    private function _get_Suras(){
         
-        if($this->uri->segment(3) === FALSE) return;
-        $this->_set_TransType($this->uri->segment(3));
+        if($this->uri->segment($this->Trans_SID) !== FALSE)
+            $this->trans->set_TransType($this->uri->segment($this->Trans_SID));
+        else return;
         
-        if($this->uri->segment(4) !== FALSE){
-            $Sura = $this->uri->segment(4);
-            if ($this->quran->Is_Sura($Sura))
-                $text = $this->trans->get_Sura($Sura);
-        }
-        // else = NULL; ^_^
+        if($this->uri->segment($this->Sura_SID) !== FALSE || $this->uri->segment($this->Sura_SID+1) !== FALSE){
+            $From_Sura = $this->uri->segment($this->Sura_SID);
+            $To_Sura   = $this->uri->segment($this->Sura_SID+1);
+        }else return;
         
-        $data['data'] = $text;
-        $this->load->view('output',$data);
+        if($this->data->Is_Sura($From_Sura) && $this->data->Is_Sura($To_Sura))
+            $Suras = $this->trans->get_Suras($From_Sura,$To_Sura);
+        else return;
+        
+        $data['Suras']     = $Suras;
+        $data['SurasInfo'] = $this->data->get_SurasInfo($From_Sura,$To_Sura);
+        
+        $this->load->view('quran_text/'.$this->ViewType.'/suras',$data);
     }
     
-    function Suras(){
-        $Sura = $text = NULL;
-        
-        if($this->uri->segment(3) === FALSE) return;
-        $this->_set_TransType($this->uri->segment(3));
-        
-        if($this->uri->segment(4) !== FALSE && $this->uri->segment(5) !== FALSE){
-            $From = $this->uri->segment(4);
-            $To = $this->uri->segment(5);
-            
-            if ($this->quran->Is_Sura($From) && $this->quran->Is_Sura($To))
-                $text = $this->trans->get_Suras($From,$To);
-        }
-        // else = NULL; ^_^
-        
-        $data['data'] = $text;
-        $this->load->view('output',$data);
-    }
 }
 
 /* End of file trans_text.php */
