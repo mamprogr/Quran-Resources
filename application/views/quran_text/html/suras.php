@@ -16,6 +16,9 @@ foreach ($Suras as $key => $Sura) {
     //var_dump($SurasInfo[$key]);
     $Type = $SurasInfo[$key]['type'] == 'Medinan'? 'مدنية':'مكية';
     echo "<div class=suraName>سورة {$SurasInfo[$key]['name']} &nbsp&nbsp&nbsp<span style='font-size: 15px;'>آياتها: {$SurasInfo[$key]['ayas']} / $Type</span></div>";
+    if ($SurasInfo[$key]['index'] != 1) {
+        echo "<div class=aya>بِسمِ اللَّهِ الرَّحمٰنِ الرَّحيمِ</div>";
+    }
     foreach ($Sura as $key => $Aya) {
         $Aya['text'] = preg_replace('/ ([ۖ-۩])/u', '<span class="sign">&nbsp;$1</span>', $Aya['text']);
         echo "<div class=aya><span class=ayaNum>{$Aya['aya']}. </span>{$Aya['text']}</div>";
