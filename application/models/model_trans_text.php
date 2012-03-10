@@ -11,7 +11,8 @@ class Model_trans_text extends CI_Model {
     /** /Const **/
     
     function __construct(){
-        parent::__construct();        
+        parent::__construct();
+        $this->load->model('Model_quran_text','quran') ;
     }
     
     function set_TransType($Type){
@@ -48,7 +49,7 @@ class Model_trans_text extends CI_Model {
     
     function get_AyaBySuraAya($Sura,$Aya){
         
-        $Index = $this->SuraAya2Index($Sura, $Aya);
+        $Index = $this->quran->SuraAya2Index($Sura, $Aya);
         
         return $this->get_AyaByIndex($Index);
         
@@ -67,59 +68,15 @@ class Model_trans_text extends CI_Model {
     
     function get_AyasBySuraAya($From_Sura,$From_Aya,$To_Sura,$To_Aya){
         
-        $From_Index = $this->SuraAya2Index($From_Sura, $From_Aya);
-        $To_Index   = $this->SuraAya2Index($To_Sura, $To_Aya)    ;
+        $From_Index = $this->quran->SuraAya2Index($From_Sura, $From_Aya);
+        $To_Index   = $this->quran->SuraAya2Index($To_Sura, $To_Aya)    ;
         
         return $this->get_AyasByIndex($From_Index, $To_Index);
     }
     
-    function SuraAya2Index($Sura,$aya){
-        
-        $this->db->where(array('sura' => $Sura,'aya' => $aya));
-        $q = $this->db->get($this->TransType);
-        $row = $q->row();
-        if($q->num_rows() > 0){
-            return $row->index;
-        }else return;
-    }
-    
-    function Index2SuraAya($Index){
-        
-        $this->db->where('index',$Index);
-        $q = $this->db->get($this->TransType);
-        $row = $q->row();
-        if($q->num_rows() > 0){
-            return array($row->sura,$row->aya);
-        }else return;
-    }
-    
-    
-    function get_SuraInfo($Sura){
-        
-        $this->db->where('index',$Sura);
-        $q = $this->db->get('suras');
-        
-        if($q->num_rows() > 0){
-            foreach ($q->row() as $key => $value) {
-                $SuraInfo[$key] = $value;
-            }
-            return $SuraInfo;
-        }else return;
-    }
-    
-    function get_SurasInfo($From_Sura,$To_Sura){
-        
-        for ($Sura=$From_Sura; $Sura <= $To_Sura; $Sura++) { 
-            $SurasInfo[] = $this->get_SuraInfo($Sura);
-        }
-        
-        return $SurasInfo;
-        
-    }
-    
     function get_Sura($SuraIndex){
         
-        $SuraInfo = $this->get_SuraInfo($SuraIndex);
+        $SuraInfo = $this->quran->get_SuraInfo($SuraIndex);
         $From_Aya = 1;
         $To_Aya   = $SuraInfo['ayas'];
         for ($Index=$From_Aya; $Index <= $To_Aya; $Index++) { 
@@ -138,11 +95,6 @@ class Model_trans_text extends CI_Model {
         }
         
         return $Suras;
-    }
-    
-    function Is_Sura($Sura){ // Check if this sura number good or not !
-        
-        return ($Sura >= 1 && $Sura <= 114);
     }
     
 }
