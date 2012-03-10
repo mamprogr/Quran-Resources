@@ -70,7 +70,7 @@ class Trans_text extends CI_Controller {
         $Ayas[] = $Aya;
         
         $data['Ayas'] = $Ayas;
-        $this->load->view('quran_text/'.$this->ViewType.'/ayas',$data);
+        $this->load->view('trans_text/'.$this->ViewType.'/ayas',$data);
     }
     
     private function _get_Ayas(){
@@ -93,7 +93,7 @@ class Trans_text extends CI_Controller {
         
         $data['Ayas'] = $Ayas;
         
-        $this->load->view('quran_text/'.$this->ViewType.'/ayas',$data);
+        $this->load->view('trans_text/'.$this->ViewType.'/ayas',$data);
         
     }
     
@@ -117,7 +117,7 @@ class Trans_text extends CI_Controller {
         $data['Suras']     = $Suras;
         $data['SurasInfo'] = $SurasInfo;
         
-        $this->load->view('quran_text/'.$this->ViewType.'/suras',$data);
+        $this->load->view('trans_text/'.$this->ViewType.'/suras',$data);
     }
     
     private function _get_Suras(){
@@ -138,7 +138,7 @@ class Trans_text extends CI_Controller {
         $data['Suras']     = $Suras;
         $data['SurasInfo'] = $this->data->get_SurasInfo($From_Sura,$To_Sura);
         
-        $this->load->view('quran_text/'.$this->ViewType.'/suras',$data);
+        $this->load->view('trans_text/'.$this->ViewType.'/suras',$data);
     }
     
 }
