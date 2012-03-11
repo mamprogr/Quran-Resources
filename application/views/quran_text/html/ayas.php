@@ -1,3 +1,4 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style>
     .suraName {text-align: center; font-size: 20px; padding: 10px 0px;
         border: 1px solid #D4DDCC; background-color: #E4EEDC; margin-top: 7px;}
