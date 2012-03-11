@@ -5,8 +5,8 @@ class Quran_text extends CI_Controller {
     private $SuraAya_Delimiter  = '-';
     private $SuraAya_SID        = 5; //$SuraAya_SegmentID;
     private $Sura_SID           = 5; //$SuraAya_SegmentID;
-    private $Quran_SID          = 4; //$Trans_SegmentID;
-    private $ViewType_SID       = 3; //$ViewType_SegmentID;
+    private $Quran_SID          = 3; //$Trans_SegmentID;
+    private $ViewType_SID       = 4; //$ViewType_SegmentID;
     private $ViewType           = 'html';
     
     function __construct(){
