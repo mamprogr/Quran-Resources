@@ -73,10 +73,11 @@
 		<p>The aim of project is provide main resources of holy quran (ayats, translate, ..) ..</p>
 
 		<p>HOW TO USE :<br />=> <b>Quran Text :</b></p>
-        <code>http://quran.mamprogr.net/quran_text/TYPE_OF_RESOURCE/HOW_OF_VIEW/COND1/COND2</code>
+        <code>http://quran.mamprogr.net/quran_text/TYPE_OF_RESOURCE/TYPE_OF_QURAN/HOW_OF_VIEW/COND1/COND2</code>
 
         <pre>
     <u><b>TYPE_OF_RESOURCE :</b></u> ayas OR suras .
+    <u><b>TYPE_OF_QURAN :</b></u> simple OR      OR simple.enhanced OR simple.min OR uthmani OR uthmani.min .
     <u><b>HOW_OF_VIEW :</b></u> html OR xml OR serialize OR json .
     <u><b>COND1,COND2 :</b></u>
         - for 'ayas' :
@@ -91,13 +92,13 @@
         </pre>
         <p>Examples :</p>
         <p>
-            <a href="http://quran.mamprogr.net/quran_text/suras/html/110/114">http://quran.mamprogr.net/quran_text/suras/html/110/114</a><br /><br />
-            <a href="http://quran.mamprogr.net/quran_text/ayas/xml/7/20">http://quran.mamprogr.net/quran_text/ayas/xml/7/20</a><br />
-            <a href="http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15">http://quran.mamprogr.net/quran_text/ayas/json/2-10/2-15</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/uthmani.min/html/110/114">http://quran.mamprogr.net/quran_text/suras/uthmani.min/html/110/114</a><br /><br />
+            <a href="http://quran.mamprogr.net/quran_text/ayas/simple.clean/xml/7/20">http://quran.mamprogr.net/quran_text/ayas/simple.clean/xml/7/20</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/ayas/simple/json/2-10/2-15">http://quran.mamprogr.net/quran_text/ayas/simple/json/2-10/2-15</a><br />
             <br />
-            <a href="http://quran.mamprogr.net/quran_text/suras/html/110">http://quran.mamprogr.net/quran_text/suras/html/110</a><br />
-            <a href="http://quran.mamprogr.net/quran_text/suras/serialize/112/114">http://quran.mamprogr.net/quran_text/suras/serialize/112/114</a><br />
-            <a href="http://quran.mamprogr.net/quran_text/suras/text/50/51">http://quran.mamprogr.net/quran_text/suras/text/50/51</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/uthmani/html/110">http://quran.mamprogr.net/quran_text/suras/uthmani/html/110</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/simple/serialize/112/114">http://quran.mamprogr.net/quran_text/suras/simple/serialize/112/114</a><br />
+            <a href="http://quran.mamprogr.net/quran_text/suras/uthmani/text/50/51">http://quran.mamprogr.net/quran_text/suras/uthmani/text/50/51</a><br />
         </p>
         <hr />
         <p>HOW TO USE :<br />=> <b>Translation Text :</b></p>
