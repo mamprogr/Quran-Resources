@@ -3,15 +3,15 @@
 class Quran_text extends CI_Controller {
     
     private $SuraAya_Delimiter  = '-';
-    private $SuraAya_SID        = 4; //$SuraAya_SegmentID;
-    private $Sura_SID           = 4; //$SuraAya_SegmentID;
+    private $SuraAya_SID        = 5; //$SuraAya_SegmentID;
+    private $Sura_SID           = 5; //$SuraAya_SegmentID;
+    private $Quran_SID          = 4; //$Trans_SegmentID;
     private $ViewType_SID       = 3; //$ViewType_SegmentID;
     private $ViewType           = 'html';
     
     function __construct(){
         parent::__construct();
         $this->load->model('Model_quran_text','data') ;
-        $this->data->set_QuranType('quran_simple_min');
         $this->data->set_Basmalah(FALSE);
         
         if($this->uri->segment($this->ViewType_SID) !== FALSE)
@@ -55,6 +55,10 @@ class Quran_text extends CI_Controller {
     
     private function _get_Aya(){
         
+        if($this->uri->segment($this->Quran_SID) !== FALSE)
+            $this->data->set_QuranType($this->uri->segment($this->Quran_SID));
+        else return;
+        
         if($this->uri->segment($this->SuraAya_SID) !== FALSE)
             $Index = $this->_Segment2AyaIndex($this->SuraAya_SID);
         else return;
@@ -71,6 +75,10 @@ class Quran_text extends CI_Controller {
     
     private function _get_Ayas(){
         
+        if($this->uri->segment($this->Quran_SID) !== FALSE)
+            $this->data->set_QuranType($this->uri->segment($this->Quran_SID));
+        else return;
+                
         if($this->uri->segment($this->SuraAya_SID) !== FALSE || $this->uri->segment($this->SuraAya_SID+1) !== FALSE){
             $From_Index = $this->_Segment2AyaIndex($this->SuraAya_SID);
             $To_Index   = $this->_Segment2AyaIndex($this->SuraAya_SID+1);
@@ -91,6 +99,10 @@ class Quran_text extends CI_Controller {
     
     private function _get_Sura(){
         
+        if($this->uri->segment($this->Quran_SID) !== FALSE)
+            $this->data->set_QuranType($this->uri->segment($this->Quran_SID));
+        else return;
+        
         if($this->uri->segment($this->Sura_SID) !== FALSE)
             $Index = $this->uri->segment($this->Sura_SID);
         else return;
@@ -109,6 +121,10 @@ class Quran_text extends CI_Controller {
     }
     
     private function _get_Suras(){
+        
+        if($this->uri->segment($this->Quran_SID) !== FALSE)
+            $this->data->set_QuranType($this->uri->segment($this->Quran_SID));
+        else return;
         
         if($this->uri->segment($this->Sura_SID) !== FALSE || $this->uri->segment($this->Sura_SID+1) !== FALSE){
             $From_Sura = $this->uri->segment($this->Sura_SID);
