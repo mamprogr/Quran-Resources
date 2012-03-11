@@ -21,6 +21,16 @@ class Model_quran_text extends CI_Model {
     
     function set_QuranType($Type){
         
+        switch ($Type) {
+            case 'simple'           : $Type = 'quran_simple';           break;
+            case 'simple.clean'     : $Type = 'quran_simple_clean';     break;
+            case 'simple.enhanced'  : $Type = 'quran_simple_enhanced';  break;
+            case 'simple.min'       : $Type = 'quran_simple_min';       break;
+            case 'uthmani'          : $Type = 'quran_uthmani';          break;
+            case 'uthmani.min'      : $Type = 'quran_uthmani_min';      break;
+            default                 : $Type = 'quran_uthmani_min';      break;
+        }
+        
         if(in_array($Type, $this->QuranTypes)){
             $this->QuranType = $Type;
             return 1;
